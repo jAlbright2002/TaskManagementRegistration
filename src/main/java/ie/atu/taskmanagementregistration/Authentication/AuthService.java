@@ -33,7 +33,7 @@ public class AuthService {
     }
 
     public ResponseEntity<String> login(LoginUser user) {
-        Optional<User> existingUserOptional = userDB.findByEmail(user.email);
+        Optional<User> existingUserOptional = userDB.findByEmail(user.getEmail());
         if (existingUserOptional.isPresent()) {
             User existingUser = existingUserOptional.get();
             if (!passEncoder.matches(user.getPassword(), existingUser.getPassword())) {
