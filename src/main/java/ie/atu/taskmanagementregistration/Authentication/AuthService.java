@@ -16,8 +16,15 @@ public class AuthService {
         this.userDB = userDB;
     }
 
-    public ResponseEntity<User> register(User user) {
-        return ResponseEntity.ok(userDB.save(user));
+    public ResponseEntity<String> register(User user) {
+        Optional<User> existingUserOptional = userDB.findByEmail(user.getEmail());
+        if (existingUserOptional.isPresent()) {
+            return ResponseEntity.status(401).body("User already exists");
+        } else {
+            userDB.save(user);
+            return ResponseEntity.ok("Thank you for joining us " + user.getFirstName());
+        }
+
     }
 
     public ResponseEntity<String> login(LoginUser user) {
