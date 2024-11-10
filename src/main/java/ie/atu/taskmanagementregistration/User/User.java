@@ -1,4 +1,4 @@
-package ie.atu.taskmanagementregistration;
+package ie.atu.taskmanagementregistration.User;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
