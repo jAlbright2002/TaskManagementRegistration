@@ -5,6 +5,8 @@ import ie.atu.taskmanagementregistration.User.UserDB;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
 
@@ -18,15 +20,16 @@ public class AuthService {
         return ResponseEntity.ok(userDB.save(user));
     }
 
-    public ResponseEntity<String> login(User user) {
-        try {
-            if (userDB.existsById(user.getId())) {
-                return ResponseEntity.ok(user.getFirstName());
-            } else {
-                return ResponseEntity.ok("User does not exist");
+    public ResponseEntity<String> login(LoginUser user) {
+        Optional<User> existingUserOptional = userDB.findByEmail(user.email);
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+            if (!existingUser.getPassword().equals(user.getPassword())) {
+                return ResponseEntity.status(401).body("Password incorrect");
             }
-        } catch (Exception e) {
-            return ResponseEntity.ok(e.getMessage());
+            return ResponseEntity.ok("Welcome " + existingUser.getFirstName());
+        } else {
+            return ResponseEntity.status(404).body("User not found");
         }
     }
 
