@@ -33,6 +33,9 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue jwtQueue() {return new Queue("jwtQueue", false);}
+
+    @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
