@@ -55,11 +55,13 @@ public class AuthService {
                 rabbitTemplate.convertAndSend("logSendNotificationQueue", notification);
                 return ResponseEntity.status(401).body("Password incorrect");
             }
+            String token = jwt.generateToken(existingUser.getEmail());
             notification.setActionType("SUCC_LOG");
             notification.setEmail(user.getEmail());
             rabbitTemplate.convertAndSend("logSendNotificationQueue", notification);
+            rabbitTemplate.convertAndSend("jwtQueue", token);
             return ResponseEntity.ok("Welcome " + existingUser.getFirstName() +
-                    "\nToken: " + jwt.generateToken(existingUser.getEmail()));
+                    "\nToken: " + token);
         } else {
             return ResponseEntity.status(404).body("User not found");
         }
