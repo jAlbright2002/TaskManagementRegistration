@@ -1,3 +1,4 @@
+Body for /register
 {
     "email": "james@atu.ie",
     "password": "Secret@Password1234",
@@ -5,6 +6,7 @@
     "userCategory": "Student"
 }
 
+Body for /login
 {
     "email": "james@atu.ie",
     "password": "Secret@Password1234"
