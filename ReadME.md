@@ -27,6 +27,7 @@ Run the following command, this will pull and run the docker images for the proj
 The project will now be running and you can access its endpoints ->
 
 [Register](http://localhost:8081/register)
+
 [Login](http://localhost:8081/login)
 
 Both are POST requests and must contain a body
